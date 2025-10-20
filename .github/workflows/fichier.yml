@@ -1,4 +1,4 @@
-name: fichiertest
+name: Fichier
 
 on:
   push:
@@ -6,22 +6,22 @@ on:
   pull_request:
     branches: ["main"]
 
-    jobs:
+jobs:
   build-and-test:
     runs-on: ubuntu-latest
-     
-      steps:
-      - name: 🔄 Checkout du code
+
+    steps:
+      - name: Checkout du code
         uses: actions/checkout@v4
 
-      - name: 🟢 Configuration de Node.js
+      - name: Configuration de Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: 📦 Installation des dépendances
+      - name: Installation des dépendances
         run: npm ci
 
-      - name: 🧪 Exécution des tests
+      - name: Exécution des tests
         run: npm test
