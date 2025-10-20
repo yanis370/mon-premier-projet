@@ -1,27 +1,43 @@
-name: Fichier
+name: CI - Tests Automatisés
 
 on:
   push:
-    branches: ["*"]
+    branches: [ main, develop ]
   pull_request:
-    branches: ["main"]
+    branches: [ main ]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout du code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Configuration de Node.js
-        uses: actions/setup-node@v4
+      - name: Installer Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '18'
 
-      - name: Installation des dépendances
+      - name: Installer les dépendances
         run: npm ci
 
-      - name: Exécution des tests
+      - name: Exécuter les tests
         run: npm test
+
+      - name: Linter le code
+        run: npm run lint
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Déployer sur staging
+        run: |
+          ssh user@server 'cd /app && \
+          git pull && \
+          npm install && \
+          pm2 restart app'
