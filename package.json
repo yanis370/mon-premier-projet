@@ -1,11 +1,16 @@
 {
   "name": "mon-premier-projet",
   "version": "1.0.0",
-  "description": "",
+  "description": "Projet Node.js avec CI/CD GitHub Actions",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"All tests passed!\""
+    "test": "jest",
+    "lint": "eslint ."
   },
-  "author": "",
+  "devDependencies": {
+    "jest": "^30.0.0",
+    "eslint": "^9.0.0"
+  },
+  "author": "Yanox",
   "license": "ISC"
 }
